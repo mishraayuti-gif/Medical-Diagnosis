@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "\ud83d\ude80 Run Full MediGrid Platform (All Services)",
+      "type": "python",
+      "request": "launch",
+      "program": "/scripts/run_all.py",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "\ud83c\udfa8 Run Streamlit Dashboard & Soundscapes",
+      "type": "python",
+      "request": "launch",
+      "module": "streamlit",
+      "args": [
+        "run",
+        "/services/ml-service/dashboard/app.py",
+        "--server.port=8501"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "\u269b\ufe0f Run React Frontend (Vite)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm --filter @workspace/medigrid-app run dev"
+    },
+    {
+      "name": "\u26a1 Run Express API Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm --filter @workspace/api-server run dev"
+    }
+  ]
+}

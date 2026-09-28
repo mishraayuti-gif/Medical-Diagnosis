@@ -1,0 +1,492 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: MediGrid healthcare platform API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: dashboard
+  - name: patients
+  - name: appointments
+  - name: symptom-analysis
+  - name: doctors
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary
+      responses:
+        "200":
+          description: Dashboard overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /patients/me:
+    get:
+      operationId: getMyPatientProfile
+      tags: [patients]
+      summary: Get current patient profile
+      responses:
+        "200":
+          description: Patient profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatientProfile"
+    patch:
+      operationId: updateMyPatientProfile
+      tags: [patients]
+      summary: Update current patient profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatientProfileUpdate"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatientProfile"
+  /appointments:
+    get:
+      operationId: listAppointments
+      tags: [appointments]
+      summary: List appointments
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [upcoming, completed, cancelled, all]
+      responses:
+        "200":
+          description: Appointment list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Appointment"
+    post:
+      operationId: createAppointment
+      tags: [appointments]
+      summary: Book an appointment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AppointmentInput"
+      responses:
+        "201":
+          description: Appointment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Appointment"
+  /symptom-analysis:
+    post:
+      operationId: analyzeSymptoms
+      tags: [symptom-analysis]
+      summary: Analyze symptoms with safety-first guidance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SymptomAnalysisInput"
+      responses:
+        "200":
+          description: Risk assessment and recommended next steps
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SymptomAnalysis"
+  /doctors:
+    get:
+      operationId: listDoctors
+      tags: [doctors]
+      summary: Find doctors
+      parameters:
+        - in: query
+          name: specialty
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Doctor list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Doctor"
+  /dataset/summary:
+    get:
+      operationId: getDatasetSummary
+      tags: [dashboard]
+      summary: Get DASS research dataset summary
+      responses:
+        "200":
+          description: Aggregated dataset metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetSummary"
+  /prescriptions:
+    get:
+      operationId: listPrescriptions
+      tags: [prescriptions]
+      summary: List all prescriptions
+      parameters:
+        - in: query
+          name: patientName
+          schema: { type: string }
+        - in: query
+          name: doctorName
+          schema: { type: string }
+        - in: query
+          name: status
+          schema: { type: string }
+      responses:
+        "200":
+          description: Prescription list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Prescription"
+    post:
+      operationId: createPrescription
+      tags: [prescriptions]
+      summary: Create an e-prescription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrescriptionInput"
+      responses:
+        "201":
+          description: Created prescription
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prescription"
+  /prescriptions/{id}:
+    get:
+      operationId: getPrescriptionById
+      tags: [prescriptions]
+      summary: Get prescription details by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Prescription details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prescription"
+  /nearby:
+    get:
+      operationId: listNearbyHealthcare
+      tags: [nearby]
+      summary: Search nearby doctors, clinics, and hospitals
+      parameters:
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: maxDistance
+          schema: { type: string }
+      responses:
+        "200":
+          description: List of nearby facilities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NearbyPlace"
+  /ml/predict:
+    post:
+      operationId: predictMentalState
+      tags: [ml]
+      summary: Predict depression, anxiety, and stress severity from TIPI and demographics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MLPredictRequest"
+      responses:
+        "200":
+          description: ML severity predictions and probabilities
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MLPredictResponse"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    DashboardSummary:
+      type: object
+      required: [patientName, nextAppointment, healthScore, notifications, metrics]
+      properties:
+        patientName: { type: string }
+        nextAppointment: { $ref: "#/components/schemas/Appointment" }
+        healthScore: { type: number }
+        notifications: { type: number }
+        metrics:
+          type: object
+          required: [bloodPressure, bloodSugar, weight]
+          properties:
+            bloodPressure: { type: string }
+            bloodSugar: { type: string }
+            weight: { type: string }
+    PatientProfile:
+      type: object
+      required: [id, name, age, gender, bloodGroup, phone, allergies, conditions]
+      properties:
+        id: { type: number }
+        name: { type: string }
+        age: { type: number }
+        gender: { type: string }
+        bloodGroup: { type: string }
+        phone: { type: string }
+        allergies: { type: array, items: { type: string } }
+        conditions: { type: array, items: { type: string } }
+        height: { type: ["number", "null"] }
+        weight: { type: ["number", "null"] }
+        bloodPressure: { type: ["string", "null"] }
+        bloodSugar: { type: ["string", "null"] }
+    PatientProfileUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        age: { type: number }
+        gender: { type: string }
+        bloodGroup: { type: string }
+        phone: { type: string }
+        allergies: { type: array, items: { type: string } }
+        conditions: { type: array, items: { type: string } }
+        height: { type: number }
+        weight: { type: number }
+        bloodPressure: { type: string }
+        bloodSugar: { type: string }
+    Appointment:
+      type: object
+      required: [id, doctorName, specialty, date, time, status, location]
+      properties:
+        id: { type: number }
+        doctorName: { type: string }
+        specialty: { type: string }
+        date: { type: string }
+        time: { type: string }
+        status: { type: string, enum: [upcoming, completed, cancelled] }
+        location: { type: string }
+        avatar: { type: string }
+    AppointmentInput:
+      type: object
+      required: [doctorName, specialty, date, time]
+      properties:
+        doctorName: { type: string }
+        specialty: { type: string }
+        date: { type: string }
+        time: { type: string }
+    SymptomAnalysisInput:
+      type: object
+      required: [symptoms, age, gender]
+      properties:
+        symptoms: { type: string, minLength: 1 }
+        age: { type: number }
+        gender: { type: string }
+        medicalHistory: { type: string }
+    SymptomAnalysis:
+      type: object
+      required: [risk, possibleConditions, recommendations, emergency]
+      properties:
+        risk: { type: string, enum: [Low, Medium, High] }
+        possibleConditions: { type: array, items: { type: string } }
+        recommendations: { type: array, items: { type: string } }
+        emergency: { type: boolean }
+    Doctor:
+      type: object
+      required: [id, name, specialty, experience, rating, distance, availability]
+      properties:
+        id: { type: number }
+        name: { type: string }
+        specialty: { type: string }
+        experience: { type: string }
+        rating: { type: number }
+        distance: { type: string }
+        availability: { type: array, items: { type: string } }
+    DatasetSummary:
+      type: object
+      required: [respondents, averageAge, countries, averageScores, riskDistribution, datasetName]
+      properties:
+        datasetName: { type: string }
+        respondents: { type: number }
+        averageAge: { type: number }
+        countries: { type: number }
+        averageScores:
+          type: object
+          required: [depression, anxiety, stress]
+          properties:
+            depression: { type: number }
+            anxiety: { type: number }
+            stress: { type: number }
+        riskDistribution:
+          type: object
+          required: [low, moderate, high]
+          properties:
+            low: { type: number }
+            moderate: { type: number }
+            high: { type: number }
+    MedicineItem:
+      type: object
+      required: [name, dosage, frequency, duration]
+      properties:
+        name: { type: string }
+        dosage: { type: string }
+        frequency: { type: string }
+        duration: { type: string }
+        route: { type: string }
+        instructions: { type: string }
+    Prescription:
+      type: object
+      required: [id, patientId, patientName, patientAge, patientGender, doctorId, doctorName, doctorSpecialization, date, clinicalNotes, medicines, generalInstructions, status]
+      properties:
+        id: { type: string }
+        patientId: { type: string }
+        patientName: { type: string }
+        patientAge: { type: number }
+        patientGender: { type: string }
+        doctorId: { type: string }
+        doctorName: { type: string }
+        doctorSpecialization: { type: string }
+        date: { type: string }
+        clinicalNotes: { type: string }
+        medicines: { type: array, items: { $ref: "#/components/schemas/MedicineItem" } }
+        generalInstructions: { type: string }
+        followUpDate: { type: string }
+        status: { type: string, enum: [ACTIVE, COMPLETED, CANCELLED] }
+    PrescriptionInput:
+      type: object
+      required: [patientName, medicines]
+      properties:
+        patientId: { type: string }
+        patientName: { type: string }
+        patientAge: { type: number }
+        patientGender: { type: string }
+        doctorId: { type: string }
+        doctorName: { type: string }
+        doctorSpecialization: { type: string }
+        date: { type: string }
+        clinicalNotes: { type: string }
+        medicines: { type: array, items: { $ref: "#/components/schemas/MedicineItem" } }
+        generalInstructions: { type: string }
+        followUpDate: { type: string }
+    NearbyPlace:
+      type: object
+      required: [id, name, category, specialty, rating, distance, distanceStr, availability, address, contact, openHours]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        specialty: { type: string }
+        rating: { type: number }
+        distance: { type: number }
+        distanceStr: { type: string }
+        availability: { type: string }
+        address: { type: string }
+        contact: { type: string }
+        openHours: { type: string }
+    TIPIInput:
+      type: object
+      required: [tipi1, tipi2, tipi3, tipi4, tipi5, tipi6, tipi7, tipi8, tipi9, tipi10]
+      properties:
+        tipi1: { type: number, minimum: 1, maximum: 7 }
+        tipi2: { type: number, minimum: 1, maximum: 7 }
+        tipi3: { type: number, minimum: 1, maximum: 7 }
+        tipi4: { type: number, minimum: 1, maximum: 7 }
+        tipi5: { type: number, minimum: 1, maximum: 7 }
+        tipi6: { type: number, minimum: 1, maximum: 7 }
+        tipi7: { type: number, minimum: 1, maximum: 7 }
+        tipi8: { type: number, minimum: 1, maximum: 7 }
+        tipi9: { type: number, minimum: 1, maximum: 7 }
+        tipi10: { type: number, minimum: 1, maximum: 7 }
+    MLPredictRequest:
+      type: object
+      required: [tipi, vocab_score, education, urban, gender, engnat, age, hand, religion, orientation, race, voted, married, familysize]
+      properties:
+        tipi: { $ref: "#/components/schemas/TIPIInput" }
+        vocab_score: { type: number, minimum: 0, maximum: 14 }
+        education: { type: number, minimum: 1, maximum: 4 }
+        urban: { type: number, minimum: 1, maximum: 3 }
+        gender: { type: number, minimum: 1, maximum: 3 }
+        engnat: { type: number, minimum: 1, maximum: 2 }
+        age: { type: number, minimum: 13, maximum: 100 }
+        hand: { type: number, minimum: 1, maximum: 3 }
+        religion: { type: number, minimum: 1, maximum: 12 }
+        orientation: { type: number, minimum: 1, maximum: 5 }
+        race: { type: number, minimum: 1, maximum: 6 }
+        voted: { type: number, minimum: 1, maximum: 2 }
+        married: { type: number, minimum: 1, maximum: 3 }
+        familysize: { type: number, minimum: 0, maximum: 20 }
+        introelapse: { type: number }
+        testelapse: { type: number }
+        surveyelapse: { type: number }
+    TargetPrediction:
+      type: object
+      required: [severity, probabilities, model_used]
+      properties:
+        severity: { type: string }
+        probabilities: { type: object, additionalProperties: { type: number } }
+        model_used: { type: string }
+    MLPredictResponse:
+      type: object
+      required: [depression, anxiety, stress, disclaimer]
+      properties:
+        depression: { $ref: "#/components/schemas/TargetPrediction" }
+        anxiety: { $ref: "#/components/schemas/TargetPrediction" }
+        stress: { $ref: "#/components/schemas/TargetPrediction" }
+        disclaimer: { type: string }
+
+

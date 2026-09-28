@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — E-Prescriptions</title>
+    <link rel="stylesheet" href="css/prescription.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="presc-container">
+        <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>✦ MediGrid Digital Prescriptions</h2>
+            <div>
+                <a href="index.html" style="color: var(--cyan-accent); font-size: 0.9font; font-weight: 600; margin-right: 1.5rem;">Home</a>
+                <button onclick="AuthService.logout()" style="background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); padding: 0.4rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">Logout</button>
+            </div>
+        </div>
+
+        <div id="viewContainer">
+            <!-- Rendered dynamically -->
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/prescriptionService.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = AuthService.getSession();
+            if (!session) {
+                window.location.href = "auth/login.html";
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const rxId = urlParams.get('id');
+
+            if (rxId) {
+                renderSinglePrescription(rxId, session);
+            } else {
+                renderPrescriptionList(session);
+            }
+        });
+
+        function renderPrescriptionList(session) {
+            let list = [];
+            if (session.role === 'doctor') {
+                list = PrescriptionService.getDoctorPrescriptions(session.name);
+            } else {
+                list = PrescriptionService.getPatientPrescriptions(session.name);
+            }
+
+            const container = document.getElementById('viewContainer');
+            
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="presc-card text-center" style="text-align:center; padding: 4rem;">
+                        <h3>No prescriptions yet.</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Your digital prescriptions will appear here after your consultation.</p>
+                        ${session.role === 'doctor' ? '<a href="doctor-prescribe.html" class="btn-add-med" style="display:inline-block; max-width:220px; margin-top:1.5rem; text-decoration:none;">Create Prescription</a>' : ''}
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="presc-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                        <h3>YOUR PRESCRIPTIONS</h3>
+                        ${session.role === 'doctor' ? '<a href="doctor-prescribe.html" class="btn-sm-cyan" style="text-decoration:none; padding:0.6rem 1.2rem;">+ New Prescription</a>' : ''}
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:1rem;">
+                        ${list.map(p => `
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-glass); padding: 1.2rem; border-radius: 12px; display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <strong style="color: var(--cyan-accent);">${p.id}</strong> — ${p.patientName} (${p.medicines.length} medicines)<br>
+                                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Doctor: ${p.doctorName} • Date: ${p.date}</span>
+                                </div>
+                                <a href="prescriptions.html?id=${p.id}" class="btn-sm-glass" style="text-decoration:none;">View</a>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSinglePrescription(rxId, session) {
+            const rx = PrescriptionService.getPrescriptionById(rxId);
+            const container = document.getElementById('viewContainer');
+
+            if (!rx) {
+                container.innerHTML = `<div class="presc-card text-center" style="text-align:center;"><h3>Prescription not found or invalid ID.</h3></div>`;
+                return;
+            }
+
+            // Role access check
+            if (session.role === 'patient' && rx.patientName.toLowerCase() !== session.name.toLowerCase()) {
+                window.location.href = "auth/unauthorized.html";
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="no-print" style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                    <a href="prescriptions.html" style="color: var(--cyan-accent); font-weight:600; text-decoration:none;">← Back to List</a>
+                    <button onclick="window.print()" class="btn-sm-cyan" style="margin-left:auto;"><i class="fa-solid fa-print"></i> Print Prescription</button>
+                </div>
+
+                <!-- Printable Clean Medical Document -->
+                <div class="printable-document">
+                    <div style="display:flex; justify-content:space-between; border-bottom: 2px solid #020617; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <h1 style="font-size: 1.8rem; font-weight: 800; letter-spacing: 0.5px;">MEDIGRID</h1>
+                            <p style="font-size: 0.85rem; color: #64748B;">Digital Healthcare & Clinical Assistant</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700;">E-PRESCRIPTION</h3>
+                            <p style="font-size: 0.85rem;"><strong>ID:</strong> ${rx.id}</p>
+                            <p style="font-size: 0.85rem;"><strong>Date:</strong> ${rx.date}</p>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        <div>
+                            <p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700;">Patient Details</p>
+                            <p><strong>Name:</strong> ${rx.patientName}</p>
+                            <p><strong>Patient ID:</strong> ${rx.patientId}</p>
+                            <p><strong>Age / Gender:</strong> ${rx.patientAge} / ${rx.patientGender}</p>
+                        </div>
+                        <div>
+                            <p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700;">Doctor Details</p>
+                            <p><strong>Name:</strong> ${rx.doctorName}</p>
+                            <p><strong>Specialization:</strong> ${rx.doctorSpecialization}</p>
+                            <p><strong>Doctor ID:</strong> ${rx.doctorId || 'DOC-001'}</p>
+                        </div>
+                    </div>
+
+                    ${rx.clinicalNotes ? `<div style="margin-bottom: 1.5rem; font-size: 0.9rem;"><p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700;">Clinical Notes / Assessment</p><p>${rx.clinicalNotes}</p></div>` : ''}
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700; margin-bottom: 0.5rem;">Prescribed Medicines</p>
+                        <table class="med-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Medicine Name</th>
+                                    <th>Dosage</th>
+                                    <th>Frequency</th>
+                                    <th>Duration</th>
+                                    <th>Instructions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rx.medicines.map((m, i) => `
+                                    <tr>
+                                        <td>${i + 1}</td>
+                                        <td><strong>${m.name}</strong></td>
+                                        <td>${m.dosage}</td>
+                                        <td>${m.frequency}</td>
+                                        <td>${m.duration}</td>
+                                        <td>${m.instructions || '-'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    ${rx.generalInstructions ? `<div style="margin-bottom: 1.5rem; font-size: 0.9rem;"><p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700;">General Instructions</p><p>${rx.generalInstructions}</p></div>` : ''}
+                    ${rx.followUpDate ? `<div style="margin-bottom: 2rem; font-size: 0.9rem;"><p style="text-transform:uppercase; font-size:0.75rem; color:#64748B; font-weight:700;">Follow-up Date</p><p>${rx.followUpDate}</p></div>` : ''}
+
+                    <div style="display:flex; justify-content:flex-end; margin-top: 3rem;">
+                        <div style="text-align: center;">
+                            <div style="font-family: monospace; font-size: 1.1rem; margin-bottom: 0.3rem;">[ Signed Digitally ]</div>
+                            <p style="border-top: 1px solid #020617; padding-top: 0.4rem; font-weight: 700; font-size: 0.9rem;">${rx.doctorName}</p>
+                            <p style="font-size: 0.75rem; color: #64748B;">MediGrid Verified Practitioner</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — Doctor Registration</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+    <div class="auth-layout">
+        <div class="auth-left-brand">
+            <a href="/" style="font-size: 1.4rem; font-weight: 800; color: #fff;">✦ MEDIGRID</a>
+            <div>
+                <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Doctor Verification</h1>
+                <p style="color: var(--text-secondary);">Join MediGrid's professional practitioner network with secure credential verification.</p>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">Manual Review Required</div>
+        </div>
+
+        <div class="auth-right-form">
+            <div class="auth-card">
+                <h2>Doctor Registration</h2>
+                <p class="auth-subtitle">Submit your credentials for administrative review.</p>
+
+                <form id="doctorSignupForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="fullName" class="form-control" required placeholder="Dr. Jane Smith">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="email" class="form-control" required placeholder="doctor@medigrid.demo">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required placeholder="+1 (555) 000-0000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Medical License Number</label>
+                            <input type="text" id="licenseNumber" class="form-control" required placeholder="MED-994821">
+                        </div>
+                        <div class="form-group">
+                            <label>Specialization</label>
+                            <input type="text" id="specialization" class="form-control" required placeholder="Cardiology">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="password" class="form-control" required minlength="8" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control" required placeholder="••••••••">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Verification Document (License / ID)</label>
+                        <input type="file" class="form-control" required style="padding: 0.5rem;">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms" style="font-size: 0.8rem; text-transform: none; margin:0;">I agree to the Terms & Privacy Policy</label>
+                    </div>
+
+                    <div id="errorBox" class="error-msg" style="display:none; margin-bottom: 1rem;"></div>
+
+                    <button type="submit" id="submitBtn" class="btn-auth">Submit Doctor Registration</button>
+                </form>
+
+                <div class="auth-footer-text">
+                    Already verified? <a href="login.html">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        document.getElementById('doctorSignupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const errorBox = document.getElementById('errorBox');
+            errorBox.style.display = 'none';
+
+            try {
+                btn.textContent = "Submitting registration...";
+                btn.disabled = true;
+
+                const payload = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    licenseNumber: document.getElementById('licenseNumber').value,
+                    specialization: document.getElementById('specialization').value,
+                    password: document.getElementById('password').value,
+                    confirmPassword: document.getElementById('confirmPassword').value
+                };
+
+                AuthService.registerDoctor(payload);
+                setTimeout(() => {
+                    window.location.href = "verification-status.html";
+                }, 800);
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.style.display = 'block';
+                btn.textContent = "Submit Doctor Registration";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

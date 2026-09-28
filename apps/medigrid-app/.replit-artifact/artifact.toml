@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MediGrid Unified Care Platform"
+description = "A unified healthcare platform for patients, doctors, receptionists, and administrators with AI-assisted symptom guidance, appointments, records, prescriptions, analytics, and nearby care discovery."
+version = "1.0.0"
+id = "artifacts/medigrid-app"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26060
+
+[services.development]
+run = "pnpm --filter @workspace/medigrid-app run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/medigrid-app", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/medigrid-app/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26060"
+BASE_PATH = "/"

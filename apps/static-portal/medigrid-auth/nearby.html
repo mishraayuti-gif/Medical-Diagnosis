@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — Find Healthcare Near You</title>
+    <link rel="stylesheet" href="css/nearby.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar Navigation -->
+    <header style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(5,8,16,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-glass); z-index: 1000; padding: 1rem 0;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none;">✦ MEDIGRID</a>
+            <div style="display: flex; gap: 1.5rem; align-items: center; font-size: 0.9rem;">
+                <span id="userGreeting" style="color: var(--text-secondary);"></span>
+                <button onclick="AuthService.logout()" style="background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); padding: 0.4rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nearby-container">
+        <!-- Page Header -->
+        <div class="nearby-header">
+            <div>
+                <h1>Find Healthcare Near You</h1>
+                <p>Discover nearby doctors, clinics and hospitals when you need care.</p>
+            </div>
+            <div class="location-badge" id="locationBadge">
+                <i class="fa-solid fa-location-dot" style="color: var(--cyan-accent);"></i>
+                <span id="locationStatusText">Location access required</span>
+                <button onclick="requestGeolocation()" id="locBtn" style="background:var(--cyan-accent); color:var(--bg-main); border:none; padding:0.3rem 0.8rem; border-radius:6px; font-weight:700; cursor:pointer; margin-left:0.5rem; font-size:0.75rem;">Use My Location</button>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-filter-box">
+            <div class="search-bar-row">
+                <div class="search-input-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search doctors, clinics, hospitals..." oninput="handleSearch()">
+                </div>
+            </div>
+            <div class="filter-tabs-row">
+                <div class="tab-group" id="filterTabs">
+                    <button class="filter-tab active" onclick="setCategory('all', this)">All</button>
+                    <button class="filter-tab" onclick="setCategory('doctor', this)">Doctors</button>
+                    <button class="filter-tab" onclick="setCategory('clinic', this)">Clinics</button>
+                    <button class="filter-tab" onclick="setCategory('hospital', this)">Hospitals</button>
+                </div>
+                <div class="select-group">
+                    <select id="distanceSelect" class="filter-select" onchange="handleFilterChange()">
+                        <option value="25">Within 25 km</option>
+                        <option value="10">Within 10 km</option>
+                        <option value="5">Within 5 km</option>
+                        <option value="1">Within 1 km</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Split Layout -->
+        <div class="nearby-layout">
+            <!-- Left: Results List -->
+            <div class="results-column" id="resultsContainer">
+                <!-- Populated dynamically by JS -->
+            </div>
+
+            <!-- Right: Interactive Map Placeholder / API Integration -->
+            <div class="map-column">
+                <div class="map-placeholder" id="mapPlaceholder">
+                    <div style="text-align: center; color: var(--text-secondary); z-index: 2;">
+                        <i class="fa-solid fa-map-location-dot" style="font-size: 3rem; color: var(--cyan-accent); margin-bottom: 1rem;"></i>
+                        <p style="font-weight: 600;">Interactive Map View</p>
+                        <p style="font-size: 0.8rem; margin-top: 0.3rem;">Markers update based on active category & location</p>
+                    </div>
+                    <!-- Dynamic Interactive Pins -->
+                    <div class="map-pin" style="top: 30%; left: 40%;" onclick="alert('Viewing Dr. Sharma on map')">Dr. Sharma 📍</div>
+                    <div class="map-pin hospital" style="top: 60%; left: 65%;" onclick="alert('Viewing City Hospital on map')">City Hospital 🏥</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modalContent">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Auth and Services -->
+    <script src="js/auth.js"></script>
+    <script src="js/nearbyService.js"></script>
+    <script src="js/nearbyApp.js"></script>
+</body>
+</html>

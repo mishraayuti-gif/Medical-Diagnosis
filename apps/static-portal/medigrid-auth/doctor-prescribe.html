@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — Create E-Prescription</title>
+    <link rel="stylesheet" href="css/prescription.css">
+</head>
+<body>
+    <div class="presc-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>✦ MediGrid Doctor Portal — Create Prescription</h2>
+            <a href="prescriptions.html" style="color: var(--cyan-accent); font-size: 0.9rem; font-weight: 600;">← Back to Prescriptions</a>
+        </div>
+
+        <div class="presc-card">
+            <form id="prescriptionForm" onsubmit="handleSavePrescription(event)">
+                <!-- Patient Info -->
+                <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--cyan-accent);">1. Patient Information</h3>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Patient Name *</label>
+                        <input type="text" id="patientName" class="form-control" required placeholder="e.g. Demo Patient">
+                    </div>
+                    <div class="form-group">
+                        <label>Patient ID *</label>
+                        <input type="text" id="patientId" class="form-control" required placeholder="e.g. PAT-001">
+                    </div>
+                    <div class="form-group">
+                        <label>Age *</label>
+                        <input type="number" id="patientAge" class="form-control" required placeholder="21">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <select id="patientGender" class="form-control">
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Doctor Info -->
+                <h3 style="font-size: 1.1rem; margin: 1.5rem 0 1rem 0; color: var(--cyan-accent);">2. Doctor Information</h3>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Doctor Name</label>
+                        <input type="text" id="doctorName" class="form-control" value="Dr. Sharma" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Specialization</label>
+                        <input type="text" id="doctorSpecialization" class="form-control" value="General Physician" readonly>
+                    </div>
+                </div>
+
+                <!-- Clinical Notes -->
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>Clinical Notes / Assessment</label>
+                    <textarea id="clinicalNotes" class="form-control" rows="3" placeholder="Enter clinical assessment notes..."></textarea>
+                </div>
+
+                <!-- Medicines List Builder -->
+                <h3 style="font-size: 1.1rem; margin: 1.5rem 0 1rem 0; color: var(--cyan-accent);">3. Medicines</h3>
+                <div id="medicinesContainer">
+                    <!-- Dynamic Rows Added Here -->
+                </div>
+                <button type="button" class="btn-add-med" onclick="addMedicineRow()">+ Add Medicine</button>
+
+                <!-- Additional Instructions -->
+                <h3 style="font-size: 1.1rem; margin: 1.5rem 0 1rem 0; color: var(--cyan-accent);">4. Instructions & Follow-Up</h3>
+                <div class="form-group">
+                    <label>General Instructions</label>
+                    <textarea id="generalInstructions" class="form-control" rows="2" placeholder="Drink adequate water and follow medication schedule."></textarea>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Follow-up Date</label>
+                        <input type="date" id="followUpDate" class="form-control">
+                    </div>
+                </div>
+
+                <div id="errorBox" style="color: var(--danger); font-size: 0.85rem; margin-bottom: 1rem; display:none;"></div>
+
+                <button type="submit" id="saveBtn" class="btn-add-med" style="background: linear-gradient(135deg, var(--cyan-accent), #06B6D4); color: var(--bg-main); border: none; font-size: 1rem; padding: 1rem;">
+                    Save & Generate Prescription ID
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/prescriptionService.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = AuthService.getSession();
+            if (!session || session.role !== 'doctor') {
+                window.location.href = "auth/unauthorized.html";
+                return;
+            }
+            document.getElementById('doctorName').value = session.name;
+            addMedicineRow(); // Add initial blank row
+        });
+
+        function addMedicineRow() {
+            const container = document.getElementById('medicinesContainer');
+            const index = container.children.length + 1;
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'medicine-row-box';
+            rowDiv.innerHTML = `
+                ${index > 1 ? '<button type="button" class="btn-del-med" onclick="this.parentElement.remove()">×</button>' : ''}
+                <div class="form-grid-2">
+                    <div class="form-group"><label>Medicine Name *</label><input type="text" class="form-control med-name" required placeholder="Paracetamol"></div>
+                    <div class="form-group"><label>Dosage *</label><input type="text" class="form-control med-dosage" required placeholder="500 mg"></div>
+                    <div class="form-group"><label>Frequency *</label><input type="text" class="form-control med-freq" required placeholder="Twice daily"></div>
+                    <div class="form-group"><label>Duration *</label><input type="text" class="form-control med-duration" required placeholder="5 days"></div>
+                    <div class="form-group"><label>Route</label><input type="text" class="form-control med-route" value="Oral"></div>
+                    <div class="form-group"><label>Instructions</label><input type="text" class="form-control med-inst" placeholder="Take after meals"></div>
+                </div>
+            `;
+            container.appendChild(rowDiv);
+        }
+
+        function handleSavePrescription(e) {
+            e.preventDefault();
+            const errorBox = document.getElementById('errorBox');
+            errorBox.style.display = 'none';
+
+            // Collect medicines
+            const medRows = document.querySelectorAll('.medicine-row-box');
+            const medicines = [];
+            for (let row of medRows) {
+                medicines.push({
+                    name: row.querySelector('.med-name').value,
+                    dosage: row.querySelector('.med-dosage').value,
+                    frequency: row.querySelector('.med-freq').value,
+                    duration: row.querySelector('.med-duration').value,
+                    route: row.querySelector('.med-route').value,
+                    instructions: row.querySelector('.med-inst').value
+                });
+            }
+
+            if (medicines.length === 0) {
+                errorBox.textContent = "Please add at least one medicine.";
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            const payload = {
+                patientId: document.getElementById('patientId').value,
+                patientName: document.getElementById('patientName').value,
+                patientAge: document.getElementById('patientAge').value,
+                patientGender: document.getElementById('patientGender').value,
+                doctorId: AuthService.getSession().userId,
+                doctorName: document.getElementById('doctorName').value,
+                doctorSpecialization: document.getElementById('doctorSpecialization').value,
+                date: new Date().toISOString().split('T')[0],
+                clinicalNotes: document.getElementById('clinicalNotes').value,
+                medicines: medicines,
+                generalInstructions: document.getElementById('generalInstructions').value,
+                followUpDate: document.getElementById('followUpDate').value
+            };
+
+            const newRx = PrescriptionService.createPrescription(payload);
+            alert(`Prescription created successfully! ID: ${newRx.id}`);
+            window.location.href = `prescriptions.html?id=${newRx.id}`;
+        }
+    </script>
+</body>
+</html>

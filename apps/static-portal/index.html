@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — One Connected Healthcare Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>  
+    <!-- Ambient Background Glows & Grid Overlay -->
+    <div class="bg-effects">
+        <div class="glow-orb cyan-orb"></div>
+        <div class="glow-orb blue-orb"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+                <span>MEDIGRID</span>
+            </a>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="active">Home</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#care-loop">AI Assistance</a>
+                <a href="#features">Features</a>
+                <a href="#healthcare">Healthcare</a>
+                <a href="#about">About</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="auth/login.html" class="btn-text">Login</a>
+                <a href="auth/role-selection.html" class="btn-primary-glow">Get Started</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="badge">
+                    ✦ CONNECTED HEALTHCARE PLATFORM
+                </div>
+                <h1 class="hero-headline">
+                    Healthcare, <span class="gradient-text">Connected</span> From First Symptom to Full Recovery.
+                </h1>
+                <p class="hero-subtext">
+                    MediGrid connects patients, doctors, receptionists and administrators in one seamless healthcare workflow.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="auth/role-selection.html" class="btn-primary-glow">
+                        Get Started →
+                    </a>
+                    <a href="#how-it-works" class="btn-secondary-glass">
+                        Explore How It Works
+                    </a>
+                </div>
+                <div class="hero-trust">
+                    <span>● AI-Assisted</span>
+                    <span>● Connected Care</span>
+                    <span>● Patient-Focused</span>
+                </div>
+            </div>
+
+            <!-- HERO VISUAL WITH ANIMATED CANVAS BRAIN & WONDERING PARTICLES -->
+            <div class="hero-visual">
+                <div class="canvas-brain-wrapper">
+                    <canvas id="heroBrainCanvas"></canvas>
+                </div>
+
+                <!-- Floating Cards -->
+                <div class="float-card card-symptom floating-slow">
+                    <div class="fc-title">AI SYMPTOM ANALYSIS</div>
+                    <div class="fc-sub">Symptoms • Age • Gender • History</div>
+                    <div class="fc-badge-risk">Risk: Medium</div>
+                    <a href="auth/login.html" class="fc-link">View Guidance →</a>
+                </div>
+
+                <div class="float-card card-appt floating-fast">
+                    <div class="fc-title">UPCOMING APPOINTMENT</div>
+                    <div class="fc-doc">Dr. Sharma</div>
+                    <div class="fc-spec">General Physician</div>
+                    <div class="fc-time">Today • 4:30 PM <span class="confirmed">✓</span></div>
+                </div>
+
+                <div class="float-card card-presc floating-med">
+                    <div class="fc-title">E-PRESCRIPTION</div>
+                    <div class="fc-sub">Prescription Ready</div>
+                    <div class="fc-dims">3 Medicines • Dosage • Notes</div>
+                    <a href="auth/login.html" class="fc-link">View Prescription →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 — THE PROBLEM -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Healthcare Today Is Fragmented.</h2>
+            </div>
+
+            <div class="problem-grid">
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h3>Fragmented Interactions</h3>
+                    <p>Patients juggle separate calls, visits, and paperwork just to get basic care.</p>
+                </div>
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-magnifying-glass-location"></i></div>
+                    <h3>Hard to Find the Right Doctor</h3>
+                    <p>No simple way to discover nearby doctors, clinics, or hospitals when it matters.</p>
+                </div>
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    <h3>Clunky Appointment Management</h3>
+                    <p>Booking, rescheduling, and confirming appointments is manual and slow.</p>
+                </div>
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-folder-open"></i></div>
+                    <h3>Scattered Medical Records</h3>
+                    <p>Prescriptions and reports live across clinics instead of one place.</p>
+                </div>
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-robot"></i></div>
+                    <h3>No Quick Preliminary Guidance</h3>
+                    <p>Patients have no easy way to understand symptoms before seeing a doctor.</p>
+                </div>
+                <div class="prob-card glass-card">
+                    <div class="prob-icon"><i class="fa-solid fa-comments"></i></div>
+                    <h3>Communication Gaps</h3>
+                    <p>Patients, doctors, and receptionists lack a shared, real-time view.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 — THE SOLUTION (CARE LOOP) -->
+    <section class="solution-section" id="care-loop">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>One Connected Loop of Care.</h2>
+                <p>MediGrid links every step so nothing falls through the cracks.</p>
+            </div>
+
+            <div class="care-loop-interactive glass-card">
+                <div class="loop-node-item">
+                    <div class="ln-num">01</div>
+                    <h4>PATIENT</h4>
+                    <p>Start your healthcare journey.</p>
+                </div>
+                <div class="loop-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="loop-node-item">
+                    <div class="ln-num">02</div>
+                    <h4>AI ASSISTANCE</h4>
+                    <p>Receive preliminary symptom guidance and risk assessment.</p>
+                </div>
+                <div class="loop-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="loop-node-item">
+                    <div class="ln-num">03</div>
+                    <h4>APPOINTMENT</h4>
+                    <p>Search, schedule and manage appointments.</p>
+                </div>
+                <div class="loop-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="loop-node-item">
+                    <div class="ln-num">04</div>
+                    <h4>RECEPTIONIST</h4>
+                    <p>Coordinate patients and doctor schedules.</p>
+                </div>
+                <div class="loop-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="loop-node-item">
+                    <div class="ln-num">05</div>
+                    <h4>DOCTOR</h4>
+                    <p>Review patient information and provide consultation.</p>
+                </div>
+                <div class="loop-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                <div class="loop-node-item">
+                    <div class="ln-num">06</div>
+                    <h4>PRESCRIPTION / FOLLOW-UP</h4>
+                    <p>Generate medicines, dosage notes and prescriptions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 — PLATFORM FEATURES -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Everything Connected in One Platform.</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feat-card glass-card"><i class="fa-solid fa-brain"></i><h3>AI Symptom Analysis</h3><p>Preliminary health guidance and risk assessment.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-user"></i><h3>Patient Dashboard</h3><p>Manage appointments, records, and treatments.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-user-doctor"></i><h3>Doctor Dashboard</h3><p>Consultations, notes, and patient history.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-headset"></i><h3>Receptionist Dashboard</h3><p>Coordinate patient flow and schedules.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-shield-halved"></i><h3>Admin Dashboard</h3><p>System oversight and user management.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-lock"></i><h3>Authentication & Role Mgmt</h3><p>Secure multi-role access control.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-map-location-dot"></i><h3>Nearby Doctor / Hospital Finder</h3><p>Locate care facilities instantly.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-prescription"></i><h3>E-Prescriptions</h3><p>Digital prescriptions and medication notes.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-bell"></i><h3>Notifications</h3><p>Real-time updates and confirmations.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-chart-line"></i><h3>Health Analytics</h3><p>Visual trends and health metrics.</p></div>
+                <div class="feat-card glass-card"><i class="fa-solid fa-triangle-exclamation"></i><h3>Emergency Alerts</h3><p>High-risk symptom detection and routing.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 — AI-POWERED CORE -->
+    <section class="ai-core-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>AI Assistance Before the Doctor.</h2>
+            </div>
+
+            <div class="ai-core-grid">
+                <div class="ai-mock-box glass-card">
+                    <div class="aim-top">AI SYMPTOM ANALYSIS ENGINE</div>
+                    <div class="aim-form-preview">
+                        <div class="afp-row"><span>Symptoms:</span> Headache, fatigue, dizziness</div>
+                        <div class="afp-row"><span>Age / Gender:</span> 28 / Male</div>
+                        <div class="afp-row"><span>Medical History:</span> None</div>
+                    </div>
+                    <div class="aim-output">
+                        <div class="ao-badge">Risk Assessment: Moderate</div>
+                        <p><strong>Possible Conditions:</strong> Identified 3 potential matches.</p>
+                        <p><strong>Suggested Precautions:</strong> Rest, hydration, physician review.</p>
+                    </div>
+                </div>
+
+                <div class="ai-desc-box">
+                    <p class="ai-lead">MediGrid uses AI to provide preliminary health guidance and risk assessment before a consultation.</p>
+                    <div class="ai-disclaimer-box glass-card">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span><strong>Medical Disclaimer:</strong> The AI provides recommendations and a risk assessment only. It is not intended to provide a final medical diagnosis — a licensed doctor always reviews and makes the final call.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6 — DASS / MENTAL HEALTH INSIGHTS -->
+    <section class="mental-health-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Understand Mental Health Patterns.</h2>
+                <p>MediGrid can use structured DASS responses to provide screening insights related to depression, anxiety and stress.</p>
+            </div>
+
+            <div class="mh-grid">
+                <div class="mh-card glass-card">
+                    <h3>DEPRESSION</h3>
+                    <div class="mh-val mod">Moderate</div>
+                    <div class="mh-bar">███████░░░</div>
+                    <span class="mh-label">SCREENING INSIGHT</span>
+                </div>
+                <div class="mh-card glass-card">
+                    <h3>ANXIETY</h3>
+                    <div class="mh-val mild">Mild</div>
+                    <div class="mh-bar">████░░░░░░</div>
+                    <span class="mh-label">SCREENING INSIGHT</span>
+                </div>
+                <div class="mh-card glass-card">
+                    <h3>STRESS</h3>
+                    <div class="mh-val mod">Moderate</div>
+                    <div class="mh-bar">██████░░░░</div>
+                    <span class="mh-label">SCREENING INSIGHT</span>
+                </div>
+            </div>
+            <p class="text-center mh-note">Screening results are not a medical diagnosis and should not replace professional evaluation.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 7 — HEALTH ANALYTICS -->
+    <section class="analytics-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Turn Healthcare Data Into Meaningful Insights.</h2>
+                <p>Interactive analytics help users and administrators understand healthcare patterns.</p>
+            </div>
+
+            <div class="analytics-dash glass-card">
+                <div class="ad-top">
+                    <span>HEALTH ANALYTICS DASHBOARD</span>
+                    <div class="ad-pills"><span>Depression</span> <span>Anxiety</span> <span>Stress</span> <span>Appointments</span></div>
+                </div>
+                <div class="ad-chart-area">
+                    <div class="ad-line-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8 — DYNAMIC CHART GENERATOR -->
+    <section class="ds2-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Explore Health Data Your Way.</h2>
+            </div>
+
+            <div class="ds2-box glass-card">
+                <div class="ds2-controls">
+                    <div class="dc-group"><label>X-Axis</label><select><option>Age</option></select></div>
+                    <div class="dc-group"><label>Y-Axis</label><select><option>Depression Score</option></select></div>
+                    <div class="dc-group"><label>Chart Type</label><select><option>Scatter</option></select></div>
+                    <button class="btn-primary-glow" onclick="alert('Generating interactive chart preview...')">Generate Chart →</button>
+                </div>
+                <div class="ds2-preview">Interactive Chart Preview (Age vs Depression Score)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9 — PATIENT EXPERIENCE -->
+    <section class="patient-exp-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Everything a Patient Needs, in One Place.</h2>
+            </div>
+
+            <div class="journey-grid">
+                <div class="j-card glass-card"><div class="jc-num">01</div><h4>Create Account & Login</h4></div>
+                <div class="j-card glass-card"><div class="jc-num">02</div><h4>Manage Profile & Health Info</h4></div>
+                <div class="j-card glass-card"><div class="jc-num">03</div><h4>Check Symptoms with AI</h4></div>
+                <div class="j-card glass-card"><div class="jc-num">04</div><h4>Search & Filter Doctors</h4></div>
+                <div class="j-card glass-card"><div class="jc-num">05</div><h4>View Slots & Book Appointment</h4></div>
+                <div class="j-card glass-card"><div class="jc-num">06</div><h4>Access Records & Prescriptions</h4></div>
+            </div>
+            <p class="text-center j-note">Patients also receive real-time notifications for confirmations, reminders, and prescription updates — and can review past appointments and uploaded reports.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 10 — DOCTOR + RECEPTIONIST COORDINATION -->
+    <section class="coord-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Keeping Patients and Doctors in Sync.</h2>
+            </div>
+
+            <div class="coord-grid">
+                <div class="coord-card glass-card">
+                    <h3>👨‍⚕️ Doctor Features</h3>
+                    <ul>
+                        <li>Doctor Profile & Specialization</li>
+                        <li>Appointment Management</li>
+                        <li>Patient Details & History</li>
+                        <li>Prescription Management</li>
+                        <li>Follow-Up Scheduling</li>
+                    </ul>
+                </div>
+                <div class="coord-card glass-card">
+                    <h3>📋 Receptionist Features</h3>
+                    <ul>
+                        <li>Appointment Requests & Triage</li>
+                        <li>Patient Registration & Check-in</li>
+                        <li>Doctor Schedule Coordination</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11 — NEARBY HEALTHCARE -->
+    <section class="nearby-section" id="healthcare">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Find the Right Care Near You.</h2>
+                <p>Find nearby doctors, clinics and hospitals when you need them.</p>
+            </div>
+
+            <div class="map-preview-box glass-card">
+                <div class="map-marker-card glass-card">
+                    <h4>Dr. Sharma</h4>
+                    <p>Cardiologist • 4.8 ★</p>
+                    <p class="dist">1.2 km away</p>
+                    <button class="btn-sm">View Profile</button>
+                </div>
+                <div class="map-marker-card glass-card hosp">
+                    <h4>City Hospital</h4>
+                    <p>Emergency & Multi-Specialty</p>
+                    <p class="dist">2.4 km away</p>
+                    <button class="btn-sm">Get Directions</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 12 — E-PRESCRIPTION -->
+    <section class="presc-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>From Consultation to Prescription.</h2>
+            </div>
+
+            <div class="presc-preview-card glass-card">
+                <div class="pp-head">PRESCRIPTION</div>
+                <div class="pp-row"><span>Patient:</span> Demo Patient</div>
+                <div class="pp-row"><span>Doctor:</span> Dr. Sharma</div>
+                <div class="pp-medicines"><strong>Medicines:</strong> Medicine A, Medicine B, Medicine C (1 tablet × 2 daily)</div>
+                <div class="pp-notes"><strong>Doctor Notes:</strong> Follow prescribed instructions carefully.</div>
+                <div class="pp-actions">
+                    <button class="btn-secondary-glass">Download PDF</button>
+                    <button class="btn-primary-glow">View Prescription</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 13 — EMERGENCY ALERT -->
+    <section class="emergency-section">
+        <div class="container">
+            <div class="emergency-card glass-card">
+                <div class="em-icon">⚠️</div>
+                <div class="em-content">
+                    <h3>When Every Minute Matters.</h3>
+                    <p>High-risk situation detected. MediGrid helps increase emergency awareness and surface nearby healthcare resources. It does not replace emergency medical services.</p>
+                </div>
+                <div class="em-actions">
+                    <a href="auth/login.html" class="btn-danger-glow">Find Nearby Hospital</a>
+                    <button class="btn-secondary-glass" onclick="alert('Calling emergency assistance...')">Emergency Assistance</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 14 — HOW MEDIGRID WORKS -->
+    <section class="how-it-works-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>One Platform. Every Step of Care.</h2>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card glass-card">
+                    <div class="sc-num">01</div>
+                    <h4>CONNECT</h4>
+                    <p>Create an account and manage your health information.</p>
+                </div>
+                <div class="step-card glass-card">
+                    <div class="sc-num">02</div>
+                    <h4>UNDERSTAND</h4>
+                    <p>Use AI-assisted symptom guidance.</p>
+                </div>
+                <div class="step-card glass-card">
+                    <div class="sc-num">03</div>
+                    <h4>CONNECT TO CARE</h4>
+                    <p>Find doctors and book appointments.</p>
+                </div>
+                <div class="step-card glass-card">
+                    <div class="sc-num">04</div>
+                    <h4>CONTINUE CARE</h4>
+                    <p>Access prescriptions, records, notifications and follow-ups.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 15 — TRUST / RESPONSIBLE AI -->
+    <section class="trust-section" id="about">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>Technology That Supports Healthcare Professionals.</h2>
+            </div>
+
+            <div class="trust-grid">
+                <div class="trust-card glass-card">
+                    <h3>AI-Assisted</h3>
+                    <p>Preliminary guidance and risk assessment.</p>
+                </div>
+                <div class="trust-card glass-card">
+                    <h3>Human Oversight</h3>
+                    <p>Doctors make the final clinical decisions.</p>
+                </div>
+                <div class="trust-card glass-card">
+                    <h3>Connected Care</h3>
+                    <p>Patients, doctors and receptionists stay coordinated.</p>
+                </div>
+                <div class="trust-card glass-card">
+                    <h3>Centralized Information</h3>
+                    <p>Appointments, prescriptions and reports are easier to manage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 16 — FINAL CTA -->
+    <section class="final-cta-section">
+        <div class="container text-center">
+            <h2>Healthcare Should Feel Connected.</h2>
+            <p>From your first symptom to your next appointment and follow-up, MediGrid keeps your healthcare journey connected.</p>
+            <div class="hero-cta-group" style="justify-content: center; margin-top: 2rem;">
+                <a href="auth/role-selection.html" class="btn-primary-glow">Get Started →</a>
+                <a href="#how-it-works" class="btn-secondary-glass">Explore the Care Loop →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-plus"></i></div>
+                    <span>MEDIGRID</span>
+                </a>
+                <p>One connected platform for patients, doctors, receptionists and administrators — from first symptom to full recovery.</p>
+            </div>
+            <div class="footer-col">
+                <h4>PRODUCT</h4>
+                <ul>
+                    <li><a href="auth/login.html">Patient</a></li>
+                    <li><a href="auth/login.html">Doctor</a></li>
+                    <li><a href="auth/login.html">Receptionist</a></li>
+                    <li><a href="auth/login.html">Admin</a></li>
+                    <li><a href="auth/login.html">AI Assistance</a></li>
+                    <li><a href="auth/login.html">Health Analytics</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>FEATURES</h4>
+                <ul>
+                    <li><a href="auth/login.html">Appointments</a></li>
+                    <li><a href="auth/login.html">E-Prescriptions</a></li>
+                    <li><a href="auth/login.html">Nearby Healthcare</a></li>
+                    <li><a href="auth/login.html">Notifications</a></li>
+                    <li><a href="auth/login.html">Emergency Alerts</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>COMPANY & LEGAL</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 MediGrid • Hackathon Project</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

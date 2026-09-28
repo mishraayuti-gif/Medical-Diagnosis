@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MindCare is a calm space to understand emotions and find support.">
+  <title>MindCare | A softer place to begin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <header class="site-header" id="top">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="MindCare home"><span class="brand-mark"><i data-lucide="leaf"></i></span>MindCare</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><i data-lucide="menu"></i></button>
+      <div class="nav-links" id="nav-links">
+        <a href="#understand">Understand</a>
+        <a href="#self-care">Self-Care</a>
+        <a href="#resources">Resources</a>
+        <a href="#contact">Contact</a>
+        <a class="button button-small button-primary" href="#support">Get Support <i data-lucide="arrow-up-right"></i></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy reveal">
+        <p class="kicker"><span></span> A gentle place to begin</p>
+        <h1 id="hero-title">You Don't Have to <em>Face It Alone.</em></h1>
+        <p class="hero-text">A safe space to understand your emotions, find support, and take one step toward feeling better.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#check-in">Start Your Journey <i data-lucide="arrow-right"></i></a>
+          <a class="button button-ghost" href="#support">Explore Support <i data-lucide="heart-handshake"></i></a>
+        </div>
+        <div class="trust-note"><span class="avatar-stack"><span></span><span></span><span></span></span><span>Small steps count. You are welcome here.</span></div>
+      </div>
+      <div class="hero-visual reveal delay-one">
+        <div class="sun-disc" aria-hidden="true"></div>
+        <div class="hero-image-wrap">
+          <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=85" alt="Person resting peacefully in a sunlit room">
+        </div>
+        <div class="floating-note note-top"><i data-lucide="sparkles"></i><span>There is room<br>for how you feel.</span></div>
+        <div class="floating-note note-bottom"><span class="pulse-dot"></span><span>Take a slow breath</span></div>
+      </div>
+    </section>
+
+    <section class="section container" id="understand" aria-labelledby="understand-title">
+      <div class="section-heading reveal"><p class="kicker">Understand your inner weather</p><h2 id="understand-title">Naming it can make<br><em>space around it.</em></h2><p>Feelings are signals, not verdicts. Explore a starting point with curiosity and kindness.</p></div>
+      <div class="topic-grid">
+        <article class="topic-card topic-lilac reveal"><div class="topic-icon"><i data-lucide="wind"></i></div><h3>Anxiety</h3><p>A mind and body response to uncertainty, pressure, or perceived threat.</p><button class="text-button topic-more" type="button" aria-expanded="false">Learn gently <i data-lucide="plus"></i></button><div class="topic-detail">Grounding, steady breathing, and talking to someone can help you feel more anchored.</div></article>
+        <article class="topic-card topic-blue reveal delay-one"><div class="topic-icon"><i data-lucide="cloud-rain"></i></div><h3>Depression</h3><p>A persistent heaviness that can affect energy, interest, sleep, and connection.</p><button class="text-button topic-more" type="button" aria-expanded="false">Learn gently <i data-lucide="plus"></i></button><div class="topic-detail">Support matters. A clinician can help you understand what is happening and what may help.</div></article>
+        <article class="topic-card topic-peach reveal delay-two"><div class="topic-icon"><i data-lucide="waves"></i></div><h3>Stress</h3><p>The body’s response when demands feel bigger than the resources available.</p><button class="text-button topic-more" type="button" aria-expanded="false">Learn gently <i data-lucide="plus"></i></button><div class="topic-detail">Rest, boundaries, and small practical changes can soften the load over time.</div></article>
+        <article class="topic-card topic-mint reveal delay-three"><div class="topic-icon"><i data-lucide="sun"></i></div><h3>Emotional wellbeing</h3><p>The ongoing practice of noticing, caring for, and communicating your needs.</p><button class="text-button topic-more" type="button" aria-expanded="false">Learn gently <i data-lucide="plus"></i></button><div class="topic-detail">Wellbeing is not constant happiness. It is having support for the full range of being human.</div></article>
+      </div>
+    </section>
+
+    <section class="checkin-section" id="check-in" aria-labelledby="checkin-title">
+      <div class="container checkin-layout">
+        <div class="section-heading reveal"><p class="kicker">A moment with yourself</p><h2 id="checkin-title">How are you feeling<br><em>today?</em></h2><p>No answer is wrong. Choose the one that feels closest, or simply notice what comes up.</p></div>
+        <div class="mood-panel reveal delay-one">
+          <div class="mood-options" role="group" aria-label="Choose how you feel today">
+            <button class="mood-option" type="button" data-mood="Happy"><span>😊</span><strong>Happy</strong></button>
+            <button class="mood-option" type="button" data-mood="Okay"><span>🙂</span><strong>Okay</strong></button>
+            <button class="mood-option" type="button" data-mood="Neutral"><span>😐</span><strong>Neutral</strong></button>
+            <button class="mood-option" type="button" data-mood="Sad"><span>😔</span><strong>Sad</strong></button>
+            <button class="mood-option" type="button" data-mood="Anxious"><span>😟</span><strong>Anxious</strong></button>
+          </div>
+          <div class="mood-response" id="mood-response" aria-live="polite"><i data-lucide="flower-2"></i><span>Choose a feeling and we’ll meet it with kindness.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="breathing-section container" id="self-care" aria-labelledby="breathing-title">
+      <div class="breathing-card reveal">
+        <div class="breathing-copy"><p class="kicker">Return to your breath</p><h2 id="breathing-title">A quiet minute<br><em>for right now.</em></h2><p>Follow the circle at your own pace. There is nothing to perfect.</p><button class="button button-primary" id="breathing-button" type="button"><i data-lucide="play"></i> Start breathing exercise</button><p class="breathing-count" id="breathing-count">1 minute practice</p></div>
+        <div class="orb-stage" aria-live="polite"><div class="breathing-orb" id="breathing-orb"><span id="breathing-label">Ready when you are</span></div><span class="orb-ring ring-one"></span><span class="orb-ring ring-two"></span></div>
+      </div>
+    </section>
+
+    <section class="support-section section" id="support" aria-labelledby="support-title">
+      <div class="container"><div class="section-heading centered reveal"><p class="kicker">Support can look many ways</p><h2 id="support-title">You deserve support<br><em>that fits your life.</em></h2></div>
+        <div class="support-grid">
+          <a class="support-card reveal" href="#contact"><span class="support-number">01</span><i data-lucide="message-circle-heart"></i><h3>Talk to someone</h3><p>Share a little with a trusted person. You do not need the perfect words.</p><span class="card-link">Find your words <i data-lucide="arrow-up-right"></i></span></a>
+          <a class="support-card reveal delay-one" href="#self-care"><span class="support-number">02</span><i data-lucide="coffee"></i><h3>Self-care tips</h3><p>Try small, kind actions that help your body and mind feel supported.</p><span class="card-link">Explore practices <i data-lucide="arrow-up-right"></i></span></a>
+          <a class="support-card reveal delay-two" href="#contact"><span class="support-number">03</span><i data-lucide="stethoscope"></i><h3>Professional support</h3><p>A mental-health professional can offer care shaped around your experience.</p><span class="card-link">Take the next step <i data-lucide="arrow-up-right"></i></span></a>
+          <a class="support-card emergency-card reveal delay-three" href="#contact"><span class="support-number">04</span><i data-lucide="phone-call"></i><h3>Emergency help</h3><p>If you may harm yourself or feel unsafe, contact local emergency services now.</p><span class="card-link">Get immediate help <i data-lucide="arrow-up-right"></i></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section section" id="resources" aria-labelledby="stats-title">
+      <div class="container stats-layout"><div class="section-heading reveal"><p class="kicker">Keep going, softly</p><h2 id="stats-title">Progress can be<br><em>quiet and real.</em></h2><p>You are not a number. These reminders are here to make the next small step feel possible.</p></div><div class="stats-grid"><div class="stat reveal"><strong data-counter="100" data-suffix="%">0%</strong><span>of you is worthy of care</span></div><div class="stat reveal delay-one"><strong data-counter="1" data-suffix=" step">0 step</strong><span>is enough to begin</span></div><div class="stat reveal delay-two"><strong data-counter="24" data-suffix="/7">0/7</strong><span>support can be sought</span></div></div></div>
+    </section>
+
+    <section class="testimonial-section section" aria-labelledby="stories-title"><div class="container"><div class="section-heading centered reveal"><p class="kicker">Words from the journey</p><h2 id="stories-title">You are in good<br><em>company.</em></h2></div><div class="testimonial-wrap reveal"><button class="carousel-button previous" type="button" aria-label="Previous story"><i data-lucide="arrow-left"></i></button><div class="testimonial-track"><article class="testimonial active"><div class="quote-mark">“</div><blockquote>Asking for help did not make me weaker. It gave me a place to put down what I had been carrying.</blockquote><div class="person"><span class="person-avatar avatar-a">M</span><span><strong>Maya, 29</strong><small>Learning to pause</small></span></div></article><article class="testimonial"><div class="quote-mark">“</div><blockquote>I started with one honest conversation. That small step changed the shape of my whole week.</blockquote><div class="person"><span class="person-avatar avatar-b">J</span><span><strong>Jordan, 34</strong><small>Finding steady ground</small></span></div></article><article class="testimonial"><div class="quote-mark">“</div><blockquote>Some days progress looks like getting out of bed. I am learning to let that count.</blockquote><div class="person"><span class="person-avatar avatar-c">A</span><span><strong>Alex, 26</strong><small>Taking it day by day</small></span></div></article></div><button class="carousel-button next" type="button" aria-label="Next story"><i data-lucide="arrow-right"></i></button><div class="carousel-dots" aria-label="Story navigation"><button class="active" aria-label="Story 1"></button><button aria-label="Story 2"></button><button aria-label="Story 3"></button></div></div></div></section>
+
+    <section class="contact-section section" id="contact" aria-labelledby="contact-title"><div class="container contact-box reveal"><div><p class="kicker">A note worth keeping</p><h2 id="contact-title">Your feelings are<br><em>worth listening to.</em></h2></div><div><p>MindCare is an educational awareness space, not a diagnostic service. For personal guidance, connect with a qualified mental-health professional.</p><a class="button button-light" href="mailto:hello@mindcare.example">Reach out for resources <i data-lucide="mail"></i></a></div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-main"><a class="brand footer-brand" href="#top"><span class="brand-mark"><i data-lucide="leaf"></i></span>MindCare</a><p>A softer place to understand what you feel and find your next step.</p><div class="footer-links"><a href="#understand">Understand</a><a href="#self-care">Self-Care</a><a href="#resources">Resources</a><a href="#contact">Contact</a></div><div class="social-links"><a href="#contact" aria-label="Instagram"><i data-lucide="instagram"></i></a><a href="#contact" aria-label="Twitter"><i data-lucide="twitter"></i></a><a href="#contact" aria-label="Email"><i data-lucide="mail"></i></a></div></div><div class="container footer-bottom"><span>© 2026 MindCare. Made with care.</span><span><a href="#contact">Privacy</a><a href="#contact">Terms</a></span></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>

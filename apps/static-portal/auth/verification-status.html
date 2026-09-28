@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — Doctor Verification Status</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body>
+    <div class="auth-layout">
+        <div class="auth-left-brand">
+            <a href="/" style="font-size: 1.4rem; font-weight: 800; color: #fff;">✦ MEDIGRID</a>
+            <div>
+                <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;">Verification Status</h1>
+                <p style="color: var(--text-secondary);">Your practitioner profile is currently under review by our administrative team.</p>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">MediGrid Trust & Safety</div>
+        </div>
+
+        <div class="auth-right-form">
+            <div class="auth-card text-center">
+                <div style="font-size: 3rem; color: var(--warning); margin-bottom: 1rem;">⏳</div>
+                <h2>Profile Under Review</h2>
+                <p class="auth-subtitle">Your doctor registration has been submitted for verification.</p>
+
+                <div style="background: var(--bg-main); border: 1px solid var(--border-glass); padding: 1.5rem; border-radius: 12px; text-align: left; margin-bottom: 1.5rem;">
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">STATUS</div>
+                    <div style="margin-bottom: 1rem;"><span class="status-badge pending" id="statusBadge">PENDING VERIFICATION</span></div>
+                    <div style="font-size: 0.9rem; margin-bottom: 0.3rem;" id="docName"><strong>Doctor:</strong> Dr. Jane Smith</div>
+                    <div style="font-size: 0.9rem;" id="docSpec"><strong>Specialization:</strong> Cardiology</div>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Once an administrator verifies your medical license through the internal portal, your account will automatically unlock access to <code style="color: var(--cyan-accent);">/doctor</code>.
+                </p>
+
+                <a href="login.html" class="btn-auth" style="display: block; text-align: center; text-decoration: none;">Return to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script>
+        const session = AuthService.getSession();
+        if (session) {
+            document.getElementById('docName').innerHTML = `<strong>Doctor:</strong> ${session.name}`;
+            const badge = document.getElementById('statusBadge');
+            badge.textContent = session.verificationStatus.toUpperCase();
+            badge.className = `status-badge ${session.verificationStatus}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "MediGrid Unified Care Platform",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "python.analysis.autoImportCompletions": true,
+    "files.exclude": {
+      "**/.git": true,
+      "**/__pycache__": true,
+      "**/.pytest_cache": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/__pycache__": true
+    }
+  }
+}

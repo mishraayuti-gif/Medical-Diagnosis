@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediGrid — Choose Your Role</title>
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-layout">
+        <div class="auth-left-brand">
+            <div><a href="../index.html" style="font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;">✦ MEDIGRID</a></div>
+            <div>
+                <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem;">Your Healthcare,<br>Connected.</h1>
+                <p style="color: var(--text-secondary);">Select your role to configure your tailored MediGrid experience.</p>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">© 2026 MediGrid</div>
+        </div>
+
+        <div class="auth-right-form">
+            <div class="auth-card">
+                <h2>How will you use MediGrid?</h2>
+                <p class="auth-subtitle">Select your account profile type to proceed.</p>
+
+                <div class="role-cards-grid">
+                    <!-- Patient Card -> Goes to Patient Signup -->
+                    <div class="role-select-card" onclick="window.location.href='patient-signup.html'">
+                        <div>
+                            <h3 style="font-size: 1.05rem; margin-bottom: 0.2rem;">PATIENT</h3>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Manage your healthcare journey</p>
+                        </div>
+                        <i class="fa-solid fa-arrow-right" style="color: var(--cyan-accent);"></i>
+                    </div>
+
+                    <!-- Doctor Card -> Goes to Doctor Signup -->
+                    <div class="role-select-card" onclick="window.location.href='doctor-signup.html'">
+                        <div>
+                            <h3 style="font-size: 1.05rem; margin-bottom: 0.2rem;">DOCTOR</h3>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Connect with and care for patients</p>
+                        </div>
+                        <i class="fa-solid fa-arrow-right" style="color: var(--cyan-accent);"></i>
+                    </div>
+
+                    <!-- Receptionist Card -> Goes directly to Login -->
+                    <div class="role-select-card" onclick="window.location.href='login.html'">
+                        <div>
+                            <h3 style="font-size: 1.05rem; margin-bottom: 0.2rem;">RECEPTIONIST</h3>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary);">Coordinate appointments and patient care</p>
+                        </div>
+                        <i class="fa-solid fa-arrow-right" style="color: var(--cyan-accent);"></i>
+                    </div>
+                </div>
+
+                <div class="auth-footer-text">
+                    Already have an account? <a href="login.html">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

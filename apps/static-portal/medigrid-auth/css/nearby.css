@@ -1,0 +1,317 @@
+/* ==========================================
+   MEDIGRID NEARBY HEALTHCARE FINDER STYLES
+   ================================---------- */
+:root {
+    --bg-main: #050810;
+    --bg-secondary: #0A0F1A;
+    --card-bg: #101827;
+    --card-elevated: #151F31;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --cyan-accent: #22D3EE;
+    --blue-accent: #6366F1;
+    --success: #34D399;
+    --warning: #FBBF24;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(34, 211, 238, 0.35);
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nearby-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 6rem 2rem 3rem 2rem;
+    width: 100%;
+}
+
+.nearby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.nearby-header h1 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+}
+
+.nearby-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Search & Filters Bar */
+.search-filter-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.search-bar-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.search-input-wrap {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrap i {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+}
+
+.search-input {
+    width: 100%;
+    background: var(--bg-main);
+    border: 1px solid var(--border-glass);
+    padding: 0.9rem 1rem 0.9rem 2.8rem;
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-input:focus { border-color: var(--cyan-accent); }
+
+.filter-tabs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tab-group, .select-group {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.filter-tab {
+    background: var(--bg-main);
+    border: 1px solid var(--border-glass);
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-tab.active, .filter-tab:hover {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: var(--cyan-accent);
+    color: var(--cyan-accent);
+}
+
+.filter-select {
+    background: var(--bg-main);
+    border: 1px solid var(--border-glass);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+/* Main Split Layout */
+.nearby-layout {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 2rem;
+    height: calc(100vh - 280px);
+    min-height: 550px;
+}
+
+.results-column {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 0.5rem;
+}
+
+.map-column {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Healthcare Cards */
+.healthcare-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    padding: 1.5rem;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.healthcare-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+}
+
+.hc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.hc-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; }
+.hc-type { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.hc-rating { background: rgba(251, 191, 36, 0.15); color: var(--warning); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
+
+.hc-details {
+    display: flex;
+    gap: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0.8rem 0;
+}
+
+.hc-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--success);
+    margin-bottom: 1rem;
+}
+
+.hc-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.btn-sm-glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-sm-glass:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--cyan-accent); }
+
+.btn-sm-cyan {
+    background: var(--cyan-accent);
+    color: var(--bg-main);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-sm-cyan:hover { opacity: 0.9; }
+
+/* Map Placeholder Styling */
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #101827 0%, #050810 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-pin {
+    position: absolute;
+    background: var(--card-elevated);
+    border: 2px solid var(--cyan-accent);
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+    animation: floatPin 3s infinite alternate ease-in-out;
+}
+.map-pin.hospital { border-color: var(--danger); box-shadow: 0 0 15px rgba(248, 113, 113, 0.4); }
+
+@keyframes floatPin {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 8, 16, 0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+.modal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    position: relative;
+}
+.modal-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none; border: none; color: var(--text-secondary);
+    font-size: 1.2rem; cursor: pointer;
+}
+
+@media(max-width: 1024px) {
+    .nearby-layout { grid-template-columns: 1fr; height: auto; }
+    .map-column { height: 350px; }
+}
